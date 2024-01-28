@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}Funnychat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+ </head>
+ <body class="bg-teal-200">
+    <nav class="flex items-center justify-between px-4 py-6 bg-teal-400">
+        <div>
+            <a href="/" class="text-xl text-white">Funnychat</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            {% if request.user.is_authenticated %}
+                <a href="/rooms/" class="text-white hover:text-gray-300">Rooms</a>
+                {% comment %} <a href="/logout/" class="px-5 py-3 rounded-xl text-white bg-teal-100 hover:bg-teal-300">Log out</a> {% endcomment %}
+                <form method="post" action="{% url 'logout' %}"> {% csrf_token %}
+                    <button type="submit" class="px-5 py-3 rounded-xl text-white bg-teal-200 hover:bg-teal-300">Log out</button>
+                </form>        
+            {% else %}
+                <a href="/login/" class="text-white hover:text-gray-300">Log in</a>
+                <a href="/signup/" class="px-5 py-3 rounded-xl text-white bg-teal-200 hover:bg-teal-300">Sign up</a>
+            {% endif %}
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    {% block scripts %}
+    {% endblock %}
+ </body>
+</html>
